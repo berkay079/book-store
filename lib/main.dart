@@ -28,8 +28,8 @@ class _AppNavigatorState extends State<AppNavigator> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    HomePage(),
     FavoriPage(),
+    HomePage(),
   ];
 
   @override
@@ -46,12 +46,13 @@ class _AppNavigatorState extends State<AppNavigator> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Ana Sayfa',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites',
+            icon: Icon(Icons.search),
+            label: 'Ara',
           ),
+        
         ],
       ),
     );
