@@ -19,7 +19,7 @@ class _BookDetailsState extends State<BookDetails> {
   @override
   void initState() {
     super.initState();
-    _fetchBookDetails();
+    _fetchBookDetails(); // Initial fetch of book details
   }
 
   Future<void> _fetchBookDetails() async {
@@ -33,7 +33,7 @@ class _BookDetailsState extends State<BookDetails> {
         _bookDetails = data['volumeInfo'];
       });
 
-      _generatePalette();
+      _generatePalette(); // Generate color palette for the book cover image
     } else {
       print('Error: ${response.reasonPhrase}');
     }
@@ -50,69 +50,68 @@ class _BookDetailsState extends State<BookDetails> {
     }
   }
 
-@override
-Widget build(BuildContext context) {
-  if (_bookDetails == null) {
-    // Loading state
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Kitap Detay'),
-      ),
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-  } else {
-    // Loaded state
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_bookDetails!['title'] ?? 'Unknown Title'),
-      ),
-      body: Container(
-        color: _paletteGenerator?.dominantColor?.color ?? Colors.white,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (_bookDetails!['imageLinks'] != null)
-                  Image.network(
-                    _bookDetails!['imageLinks']['thumbnail'],
-                    height: 200,
-                    width: 150,
-                    fit: BoxFit.cover,
-                  ),
-                SizedBox(height: 16),
-                Text(
-                  'Yazar: ${_bookDetails!['authors']?.join(', ') ?? 'Unknown Author'}',
-                  style: TextStyle(color: Colors.black, fontSize: 18),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Kitap Adı: ${_bookDetails!['title'] ?? 'Unknown Title'}',
-                  style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Yayınlanma Tarihi: ${_bookDetails!['publishedDate'] ?? 'Unknown Date'}',
-                  style: TextStyle(color: Colors.black),
-                ),
-                SizedBox(height: 16),
-                if (_bookDetails!['description'] != null)
+  @override
+  Widget build(BuildContext context) {
+    if (_bookDetails == null) {
+      // Loading state
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Kitap Detay'), // App bar title
+        ),
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else {
+      // Loaded state
+      return Scaffold(
+        appBar: AppBar(
+          title: Text(_bookDetails!['title'] ?? 'Unknown Title'), // Book title in app bar
+        ),
+        body: Container(
+          color: _paletteGenerator?.dominantColor?.color ?? Colors.white, // Background color
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (_bookDetails!['imageLinks'] != null)
+                    Image.network(
+                      _bookDetails!['imageLinks']['thumbnail'],
+                      height: 200,
+                      width: 150,
+                      fit: BoxFit.cover,
+                    ),
+                  SizedBox(height: 16),
                   Text(
-                    'Açıklama: ${_bookDetails!['description']}',
+                    'Yazar: ${_bookDetails!['authors']?.join(', ') ?? 'Unknown Author'}',
+                    style: TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Kitap Adı: ${_bookDetails!['title'] ?? 'Unknown Title'}',
+                    style: TextStyle(color: Colors.black, fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'Yayınlanma Tarihi: ${_bookDetails!['publishedDate'] ?? 'Unknown Date'}',
                     style: TextStyle(color: Colors.black),
                   ),
-                // İlgili diğer bilgileri ekleyebilirsin.
-              ],
+                  SizedBox(height: 16),
+                  if (_bookDetails!['description'] != null)
+                    Text(
+                      'Açıklama: ${_bookDetails!['description']}',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  // You can add other relevant information here.
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
-}
-
 }
