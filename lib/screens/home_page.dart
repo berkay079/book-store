@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'book_details.dart'; // Detay sayfasını içeren dosya
+import 'book_details.dart'; // File containing the details page
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       setState(() {
-        _searchResults = data['items'] ?? [];
+        _searchResults = data['items'] ?? []; // Updating search results with book items
       });
     } else {
       // Handle error
@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('Home Page'), // App bar title
       ),
       body: Column(
         children: [
@@ -40,14 +40,14 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: _searchController,
-              decoration: InputDecoration(labelText: 'Kitap Adı'),
+              decoration: InputDecoration(labelText: 'Kitap Adı'), // Textfield for entering book name
             ),
           ),
           ElevatedButton(
             onPressed: () {
-              _searchBooks(_searchController.text);
+              _searchBooks(_searchController.text); // Trigger book search on button press
             },
-            child: Text('Kitapları Ara'),
+            child: Text('Kitapları Ara'), // Button text
           ),
           Expanded(
             child: ListView.builder(
@@ -57,8 +57,8 @@ class _HomePageState extends State<HomePage> {
                 final imageLinks = book['imageLinks'] ?? {};
 
                 return ListTile(
-                  title: Text(book['title'] ?? 'Unknown Title'),
-                  subtitle: Text(book['authors']?.join(', ') ?? 'Unknown Author'),
+                  title: Text(book['title'] ?? 'Unknown Title'), // Book title
+                  subtitle: Text(book['authors']?.join(', ') ?? 'Unknown Author'), // Book author(s)
                   leading: imageLinks.isNotEmpty
                       ? Image.network(
                           imageLinks['thumbnail'],
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                         )
                       : SizedBox.shrink(),
                   onTap: () {
-                    // Seçilen kitabın detay sayfasına git
+                    // Navigate to the details page of the selected book
                     Navigator.push(
                       context,
                       MaterialPageRoute(
