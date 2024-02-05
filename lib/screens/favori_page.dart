@@ -1,8 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'book_details.dart'; // Detay sayfasını içeren dosya
-
+import 'book_details.dart'; // File containing the details page
 
 class FavoriPage extends StatefulWidget {
   @override
@@ -16,8 +15,8 @@ class _FavoriPageState extends State<FavoriPage> {
   @override
   void initState() {
     super.initState();
-    _searchNewBooks();
-    _searchBestSellerBooks();
+    _searchNewBooks(); // Initial search for new books
+    _searchBestSellerBooks(); // Initial search for bestseller books
   }
 
   Future<void> _searchNewBooks() async {
@@ -31,7 +30,7 @@ class _FavoriPageState extends State<FavoriPage> {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       setState(() {
-        _newBooks = data['items'] ?? [];
+        _newBooks = data['items'] ?? []; // Updating new books with search results
       });
     } else {
       print('Error: ${response.reasonPhrase}');
@@ -46,7 +45,7 @@ class _FavoriPageState extends State<FavoriPage> {
     if (response.statusCode == 200) {
       final Map<String, dynamic> data = json.decode(response.body);
       setState(() {
-        _bestSellerBooks = data['items'] ?? [];
+        _bestSellerBooks = data['items'] ?? []; // Updating bestseller books with search results
       });
     } else {
       print('Error: ${response.reasonPhrase}');
@@ -54,11 +53,10 @@ class _FavoriPageState extends State<FavoriPage> {
   }
 
   @override
-// ...
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Yeni Çıkan ve Best Seller Kitaplar'),
+        title: Text('Yeni Çıkan ve Best Seller Kitaplar'), // App bar title
       ),
       body: Column(
         children: <Widget>[
@@ -159,7 +157,4 @@ class _FavoriPageState extends State<FavoriPage> {
       ),
     );
   }
-
-// ...
-
 }
